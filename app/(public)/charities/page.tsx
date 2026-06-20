@@ -8,14 +8,12 @@ import { Button } from '@/app/components/ui/Button'
 import { Card, CardContent } from '@/app/components/ui/Card'
 import { createClient } from '@/app/lib/supabase/client'
 import type { Charity } from '@/app/lib/supabase'
-import { useSearchParams } from 'next/navigation'
+// removed unused import: useSearchParams
 
 export default function CharitiesPage() {
   const [charities, setCharities] = useState<Charity[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState('')
-  const searchParams = useSearchParams()
-  const preselectedId = searchParams.get('selected')
 
   useEffect(() => {
     async function fetchCharities() {
