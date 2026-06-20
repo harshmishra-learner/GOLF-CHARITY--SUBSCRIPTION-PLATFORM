@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { stripe, MONTHLY_PRICE_ID, YEARLY_PRICE_ID } from '@/app/lib/stripe'
+import { stripe } from '@/app/lib/stripe'
 import { createClient } from '@supabase/supabase-js'
 
-export async function POST(request: NextRequest) {
+export async function POST(_request: NextRequest) {
   try {
-    const { priceId, successUrl, cancelUrl } = await request.json()
+    const { priceId, successUrl, cancelUrl } = await _request.json()
 
     if (!priceId) {
       return NextResponse.json(

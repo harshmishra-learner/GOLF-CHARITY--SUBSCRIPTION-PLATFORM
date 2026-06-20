@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '../ui/Button'
-import { supabase } from '@/app/lib/supabase'
 
 const navigation = [
   { name: 'Home', href: '/' },
