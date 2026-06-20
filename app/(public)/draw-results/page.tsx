@@ -169,7 +169,7 @@ export default function DrawResultsPage() {
                               Draw Not Yet Published
                             </h3>
                             <p className="text-gray-600">
-                              This draw is scheduled but results haven't been announced yet.
+                              This draw is scheduled but results have not been announced yet.
                               Check back after the draw date!
                             </p>
                           </div>

@@ -93,7 +93,7 @@ export default function WinningsPage() {
           <Card className="border-accent-200 bg-accent-50">
             <CardHeader><CardTitle className="flex items-center space-x-2"><span>🏆</span><span>Congratulations! Pending Verification</span></CardTitle></CardHeader>
             <CardContent>
-              <p className="text-gray-700 mb-4">You've won! To receive your prize, please upload proof of your scores from the golf platform (screenshot showing your scorecard).</p>
+              <p className="text-gray-700 mb-4">You have won! To receive your prize, please upload proof of your scores from the golf platform (screenshot showing your scorecard).</p>
               <Button variant="primary">Upload Proof</Button>
             </CardContent>
           </Card>

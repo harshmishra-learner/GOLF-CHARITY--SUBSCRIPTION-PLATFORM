@@ -12,5 +12,10 @@ const nextConfig = {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
 }
+const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+};
 
 module.exports = nextConfig

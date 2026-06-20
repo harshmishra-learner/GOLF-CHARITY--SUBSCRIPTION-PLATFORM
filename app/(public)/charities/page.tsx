@@ -48,7 +48,7 @@ export default function CharitiesPage() {
             <h1 className="text-5xl font-bold text-gray-900 mb-4">Our Charity Partners</h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Every month, a portion of your subscription goes directly to the charity
-              you choose. Select from our verified partners and see the impact you're making.
+              you choose. Select from our verified partners and see the impact you are making.
             </p>
           </div>
 
