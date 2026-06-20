@@ -1,7 +1,6 @@
 'use client'
-
+import Link from 'next/link';
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Button } from '@/app/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/Card'
@@ -9,7 +8,6 @@ import { createClient } from '@/app/lib/supabase/client'
 import { formatCurrency, formatDate, formatMonthYear } from '@/app/lib/utils'
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [scores, setScores] = useState<any[]>([])
@@ -23,7 +21,6 @@ export default function DashboardPage() {
         window.location.href = '/login'
         return
       }
-      setUser(user)
 
       // Get user profile
       const { data: profileData } = await supabase
