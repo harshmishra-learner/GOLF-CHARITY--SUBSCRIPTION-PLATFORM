@@ -8,7 +8,15 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 export async function POST(request: NextRequest) {
   const body = await request.text()
-  const signature = request.headers.get('stripe-signature')!
+  const signature = request.headers.get('stripe-signature')
+
+  if (!signature) {
+    console.error('Missing Stripe signature header')
+    return NextResponse.json(
+      { error: 'Missing Stripe signature header' },
+      { status: 400 }
+    )
+  }
 
   try {
     const event = stripe.webhooks.constructEvent(
@@ -69,8 +77,10 @@ async function handleCheckoutSessionCompleted(session: any) {
   // Calculate charity percentage (default 10%)
   const charityPercentage = 10
 
-  // Calculate amounts
-  const totalAmount = subscription.items.data[0].price.unit_amount / 100
+  // Calculate amounts (guarding against possible nulls)
+  const firstItem = subscription.items?.data?.[0]
+  const unitAmount = firstItem?.price?.unit_amount ?? 0
+  const totalAmount = unitAmount / 100
   const charityAmount = totalAmount * (charityPercentage / 100)
   const prizePoolAmount = totalAmount * 0.10
 
@@ -105,7 +115,7 @@ async function handleCheckoutSessionCompleted(session: any) {
   await supabase.from('users').update({
     subscription_id: subscriptionId,
     subscription_status: 'active',
-    subscription_tier: subscription.items.data[0].price.id.includes('yearly') ? 'yearly' : 'monthly',
+    subscription_tier: (firstItem?.price?.id ?? '').includes('yearly') ? 'yearly' : 'monthly',
     current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
   }).eq('id', userId)
 
@@ -113,17 +123,17 @@ async function handleCheckoutSessionCompleted(session: any) {
 }
 
 async function handleSubscriptionUpdated(subscription: any) {
-  const userId = subscription.metadata?.user_id
+  let userId = subscription.metadata?.user_id
 
   if (!userId) {
-    // Try to find by subscription ID
     const { data: userData } = await supabase
       .from('users')
       .select('id')
       .eq('subscription_id', subscription.id)
       .single()
 
-    if (!userData) return
+    if (!userData?.id) return
+    userId = userData.id
   }
 
   await supabase.from('users').update({
@@ -135,7 +145,7 @@ async function handleSubscriptionUpdated(subscription: any) {
 }
 
 async function handleSubscriptionDeleted(subscription: any) {
-  const userId = subscription.metadata?.user_id
+  let userId = subscription.metadata?.user_id
 
   if (!userId) {
     const { data: userData } = await supabase
@@ -144,7 +154,8 @@ async function handleSubscriptionDeleted(subscription: any) {
       .eq('subscription_id', subscription.id)
       .single()
 
-    if (!userData) return
+    if (!userData?.id) return
+    userId = userData.id
   }
 
   await supabase.from('users').update({
@@ -184,10 +195,12 @@ async function handlePaymentSucceeded(invoice: any) {
     status: 'succeeded',
   })
 
+  if (!userId) return
+
   // Update/refresh subscription period
   await supabase.from('users').update({
     current_period_end: new Date(invoice.next_payment_attempt * 1000).toISOString(),
-  }).eq('id' || userId)
+  }).eq('id', userId)
 
   console.log(`Payment succeeded for user ${userId}`)
 }
