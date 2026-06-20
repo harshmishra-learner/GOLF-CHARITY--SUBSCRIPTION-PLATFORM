@@ -84,7 +84,7 @@ export async function POST(request: NextRequest) {
         const result = DrawEngine.simulateDraw(
           config,
           participants,
-          allScores || undefined
+          allScores as any
         )
 
         return NextResponse.json({ simulation: result })
@@ -124,16 +124,16 @@ export async function POST(request: NextRequest) {
           .eq('draw_id', drawId)
 
         // Calculate winners
-        const winners3 = participants?.filter(p => p.user_numbers.filter(n => winningNumbers.includes(n)).length >= 3) || []
-        const winners4 = participants?.filter(p => p.user_numbers.filter(n => winningNumbers.includes(n)).length === 4) || []
-        const winners5 = participants?.filter(p => p.user_numbers.filter(n => winningNumbers.includes(n)).length === 5) || []
+        const winners3 = participants?.filter(p => p.user_numbers.filter((n: any) => winningNumbers.includes(n)).length >= 3) || []
+        const winners4 = participants?.filter(p => p.user_numbers.filter((n: any) => winningNumbers.includes(n)).length === 4) || []
+        const winners5 = participants?.filter(p => p.user_numbers.filter((n: any) => winningNumbers.includes(n)).length === 5) || []
 
         const distribution = DrawEngine.calculatePrizes(prizePool, winners3, winners4, winners5)
 
         // Calculate individual prizes
         const updatedParticipants: any[] = []
         for (const p of participants || []) {
-          const matches = p.user_numbers.filter(n => winningNumbers.includes(n)).length
+          const matches = p.user_numbers.filter((n: any) => winningNumbers.includes(n)).length
           let prizeAmount = 0
           let matchType = ''
 
