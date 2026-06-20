@@ -62,7 +62,7 @@ export default function AdminLayout({
 
   const handleSignOut = async () => {
     const supabase = createClient()
-    await supabase.signOut()
+    await supabase.auth.signOut()
     router.push('/')
   }
 
