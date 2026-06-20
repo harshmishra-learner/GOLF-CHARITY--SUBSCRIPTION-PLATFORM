@@ -8,7 +8,6 @@ import { createClient } from '@/app/lib/supabase/client'
 import { formatCurrency } from '@/app/lib/utils'
 
 export default function CharityPage() {
-  const [user, setUser] = useState<any>(null)
   const [profile, setProfile] = useState<any>(null)
   const [charities, setCharities] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -25,7 +24,7 @@ export default function CharityPage() {
         window.location.href = '/login'
         return
       }
-      setUser(user)
+      // setUser(user)
 
       const { data: userData } = await supabase.from('users').select('*').eq('id', user.id).single()
       setProfile(userData)
