@@ -6,8 +6,7 @@ import { Button } from '@/app/components/ui/Button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/app/components/ui/Card'
 import { Input } from '@/app/components/ui/Input'
 import { createClient } from '@/app/lib/supabase/client'
-import { formatCurrency, formatDate } from '@/app/lib/utils'
-
+import { formatDate } from '@/app/lib/utils'
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
