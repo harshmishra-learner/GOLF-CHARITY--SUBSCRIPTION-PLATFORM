@@ -48,7 +48,6 @@ export default function WinningsPage() {
   }
 
   const wonItems = participations.filter(p => p.won)
-  const pendingItems = participations.filter(p => p.prize_amount && p.payout_status === 'pending')
 
   return (
     <div className="space-y-6">
