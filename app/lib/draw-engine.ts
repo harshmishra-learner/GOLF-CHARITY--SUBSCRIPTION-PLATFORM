@@ -143,15 +143,12 @@ export class DrawEngine {
       '5-number': drawParticipants.filter(p => p.match_type === '5-number'),
     }
 
-    // Track if 5-number has any winners
-    const has5MatchWinner = winners['5-number'].length > 0
-
     return {
       draw: {
         id: 'sim-draw',
         month: new Date().getMonth() + 1,
         year: new Date().getFullYear(),
-        draw_type: config.winningNumbersCount.toString() + '-number' as const,
+        draw_type: `${config.winningNumbersCount}-number` as '3-number' | '4-number' | '5-number',
         status: 'simulation',
         winning_numbers: generatedNumbers,
         jackpot_amount: 0,
