@@ -102,7 +102,9 @@ export default function ScoresPage() {
     await fetchScores()
   }
 
-  // Rest of the component remains the same...
+  const latestScores = scores.slice(0, 5)
+  const userNumbers = latestScores.map((score) => Number(score.score))
+
   if (loading) {
     return <div className="text-center py-12">Loading...</div>
   }
@@ -172,7 +174,7 @@ export default function ScoresPage() {
             <CardHeader><CardTitle>Your Scores ({scores.length})<span className="text-sm font-normal text-gray-500 ml-2">(showing newest first)</span></CardTitle></CardHeader>
             <CardContent>
               <div className="space-y-3">
-                {latestScores.map((score, index) => (
+                {scores && scores.map((score, index) => (
                   <motion.div key={score.id} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: index * 0.1 }} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                     <div className="flex items-center space-x-4">
                       <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${index === 0 ? 'bg-gradient-to-br from-primary-500 to-secondary-500' : 'bg-gray-400'}`}>
