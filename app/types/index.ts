@@ -1,3 +1,5 @@
+import { DrawParticipant } from '../lib/supabase'
+
 export * from '../lib/supabase'
 
 export interface SubscriptionPlan {
@@ -38,7 +40,7 @@ export const SUBSCRIPTION_PLANS: SubscriptionPlan[] = [
 ]
 
 export interface DrawResult {
-  draw: Draw
+  draw: any
   winners: {
     '3-number': DrawParticipant[]
     '4-number': DrawParticipant[]
