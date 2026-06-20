@@ -217,3 +217,5 @@ Database trigger automatically deletes oldest scores beyond the 5 most recent wh
 ## License
 
 This is a sample project for evaluation purposes.
+
+ **🚀 Live Demo:** [View the Platform Here](https://golf-charity-subscription-platform-beta-snowy.vercel.app?_vercel_share=B09TMaHIuFGbv0ZHgKa5Eq4W1xo8nFNu)
